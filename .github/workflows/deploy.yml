@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch: # Tato část umožňuje ruční spuštění
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -14,15 +14,22 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Set up Terraform
-      uses: hashicorp/setup-terraform@v2
-      with:
-        terraform_version: 1.5.0
-
     - name: Azure login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Set Terraform variables from secrets
+      run: |
+        echo "subscription_id = \"$(jq -r '.subscriptionId' <<< '${{ secrets.AZURE_CREDENTIALS }}')" > terraform.tfvars
+        echo "client_id = \"$(jq -r '.clientId' <<< '${{ secrets.AZURE_CREDENTIALS }}')" >> terraform.tfvars
+        echo "client_secret = \"$(jq -r '.clientSecret' <<< '${{ secrets.AZURE_CREDENTIALS }}')" >> terraform.tfvars
+        echo "tenant_id = \"$(jq -r '.tenantId' <<< '${{ secrets.AZURE_CREDENTIALS }}')" >> terraform.tfvars
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.5.0
 
     - name: Terraform Init
       run: terraform init
