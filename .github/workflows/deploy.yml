@@ -19,12 +19,12 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-  - name: Set Terraform variables from secrets
-    run: |
-    echo "subscription_id = \"$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.subscriptionId')\"" > terraform.tfvars
-    echo "client_id = \"$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.clientId')\"" >> terraform.tfvars
-    echo "client_secret = \"$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.clientSecret')\"" >> terraform.tfvars
-    echo "tenant_id = \"$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.tenantId')\"" >> terraform.tfvars
+    - name: Set Terraform variables from secrets
+      run: |
+      echo "subscription_id = \"$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.subscriptionId')\"" > terraform.tfvars
+      echo "client_id = \"$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.clientId')\"" >> terraform.tfvars
+      echo "client_secret = \"$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.clientSecret')\"" >> terraform.tfvars
+      echo "tenant_id = \"$(echo '${{ secrets.AZURE_CREDENTIALS }}' | jq -r '.tenantId')\"" >> terraform.tfvars
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v2
