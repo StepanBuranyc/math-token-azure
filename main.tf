@@ -1,10 +1,6 @@
 provider "azurerm" {
   features {}
-
-  subscription_id = var.subscription_id
-  client_id       = var.client_id
-  client_secret   = var.client_secret
-  tenant_id       = var.tenant_id
+  subscription_id = "8648d84a-8b3f-437c-adb1-819819ceed83"  
 }
 
 # Vytvoření Resource Group
