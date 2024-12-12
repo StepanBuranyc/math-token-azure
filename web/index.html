@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Token</title>
+</head>
+<body>
+    <h1>Math Challenge</h1>
+    <div id="challenge"></div>
+    <input type="text" id="answer" placeholder="Your answer">
+    <button onclick="submitAnswer()">Submit</button>
+    <p id="response"></p>
+
+    <script>
+        let correctAnswer;
+        function generateQuestion() {
+            const a = Math.floor(Math.random() * 10) + 1;
+            const b = Math.floor(Math.random() * 10) + 1;
+            correctAnswer = a + b;
+            document.getElementById('challenge').innerText = `What is ${a} + ${b}?`;
+        }
+        function submitAnswer() {
+            const userAnswer = document.getElementById('answer').value;
+            if (parseInt(userAnswer) === correctAnswer) {
+                document.getElementById('response').innerText = "Correct! Here's your token: TOKEN123";
+            } else {
+                document.getElementById('response').innerText = "Incorrect, try again.";
+            }
+        }
+        generateQuestion();
+    </script>
+</body>
+</html>
